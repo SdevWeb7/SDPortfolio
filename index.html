@@ -7,9 +7,12 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Scanlines Effect -->
+    <div class="scanlines"></div>
+
     <!-- Canvas for particles background -->
     <canvas id="particles-canvas"></canvas>
 
@@ -47,9 +50,9 @@
                 </h1>
                 <h2 class="hero-title">Développeur Web Full-Stack</h2>
                 <p class="hero-description">
-                    Autodidacte passionné par le développement web, je crée des applications modernes
-                    et performantes avec Next.js, React, et Symfony. Spécialisé dans les stacks
-                    <span class="highlight">Next.js + Prisma</span> et <span class="highlight">Symfony + React</span>.
+                    Autodidacte passionné par le développement web et l'IA, je crée des applications modernes
+                    et performantes. Spécialisé dans la stack <span class="highlight">Next.js + Prisma + Vercel</span>
+                    et l'intégration d'<span class="highlight">agents IA avec Claude API</span>.
                 </p>
                 <div class="hero-cta">
                     <a href="#projects" class="btn btn-primary">
@@ -91,16 +94,16 @@
                     <div class="window-content">
                         <pre><code><span class="code-keyword">const</span> <span class="code-function">developer</span> = {
   <span class="code-property">name</span>: <span class="code-string">'Steven'</span>,
-  <span class="code-property">role</span>: <span class="code-string">'Full-Stack'</span>,
-  <span class="code-property">skills</span>: [
+  <span class="code-property">role</span>: <span class="code-string">'Full-Stack + AI'</span>,
+  <span class="code-property">stack</span>: [
     <span class="code-string">'Next.js'</span>,
-    <span class="code-string">'React'</span>,
-    <span class="code-string">'Symfony'</span>,
-    <span class="code-string">'Prisma'</span>
+    <span class="code-string">'Prisma'</span>,
+    <span class="code-string">'Vercel'</span>,
+    <span class="code-string">'Claude API'</span>
   ],
   <span class="code-property">passion</span>: <span class="code-keyword">true</span>,
-  <span class="code-function">code</span>: () => {
-    <span class="code-keyword">return</span> <span class="code-string">'✨ Magic ✨'</span>;
+  <span class="code-function">build</span>: () => {
+    <span class="code-keyword">return</span> <span class="code-string">'🚀 Innovation'</span>;
   }
 };</code></pre>
                     </div>
@@ -160,7 +163,7 @@
                     <div class="skills-tags">
                         <span class="skill-tag">Node.js</span>
                         <span class="skill-tag">Express.js</span>
-                        <span class="skill-tag favorite">Symfony 💜</span>
+                        <span class="skill-tag">Symfony</span>
                         <span class="skill-tag">PHP</span>
                         <span class="skill-tag">Python</span>
                     </div>
@@ -208,8 +211,28 @@
                     <div class="skills-tags">
                         <span class="skill-tag">Git</span>
                         <span class="skill-tag">GitHub</span>
+                        <span class="skill-tag favorite">Vercel 💜</span>
                         <span class="skill-tag">Vite</span>
                         <span class="skill-tag">Webpack</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3 class="category-title">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 22.125l-.394-1.558a2.625 2.625 0 00-1.673-1.673L12.875 18.5l1.558-.394a2.625 2.625 0 001.673-1.673l.394-1.558.394 1.558a2.625 2.625 0 001.673 1.673l1.558.394-1.558.394a2.625 2.625 0 00-1.673 1.673z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        IA & Agents
+                    </h3>
+                    <div class="skills-tags">
+                        <span class="skill-tag favorite">Claude API 💜</span>
+                        <span class="skill-tag favorite">Claude Agents 💜</span>
+                        <span class="skill-tag">Claude Skills</span>
+                        <span class="skill-tag">Prompt Engineering</span>
+                        <span class="skill-tag">MCP Servers</span>
+                        <span class="skill-tag">AI Integration</span>
+                        <span class="skill-tag">RAG Systems</span>
+                        <span class="skill-tag">Context7</span>
                     </div>
                 </div>
             </div>
@@ -387,8 +410,8 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <p>&copy; 2024 Steven - Développeur Full-Stack</p>
-                <p class="footer-note">Construit avec <span class="heart">❤️</span> et Next.js</p>
+                <p>&copy; 2026 Steven - Développeur Full-Stack + AI</p>
+                <p class="footer-note">Construit avec <span class="heart">❤️</span> Next.js et Claude</p>
             </div>
         </div>
     </footer>

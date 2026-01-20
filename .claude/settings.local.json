@@ -30,9 +30,12 @@
       "Bash(git log:*)",
       "Bash(gh issue view:*)",
       "WebFetch(domain:*)",
-      "Skill(*)"
+      "Skill(*)",
+      "Bash(winget install:*)",
+      "Bash(gh auth status:*)",
+      "Bash(gh:*)",
+      "Skill(commit)"
     ],
-    "deny": [
-    ]
+    "deny": []
   }
 }
