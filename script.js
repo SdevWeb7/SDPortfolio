@@ -51,7 +51,7 @@ class ParticlesSystem {
             // Draw particle
             this.ctx.beginPath();
             this.ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-            this.ctx.fillStyle = 'rgba(0, 240, 255, 0.5)';
+            this.ctx.fillStyle = 'rgba(0, 212, 255, 0.5)';
             this.ctx.fill();
 
             // Draw connections
@@ -65,7 +65,7 @@ class ParticlesSystem {
                     this.ctx.moveTo(particle.x, particle.y);
                     this.ctx.lineTo(otherParticle.x, otherParticle.y);
                     const opacity = (1 - distance / this.connectionDistance) * 0.3;
-                    this.ctx.strokeStyle = `rgba(0, 240, 255, ${opacity})`;
+                    this.ctx.strokeStyle = `rgba(0, 212, 255, ${opacity})`;
                     this.ctx.lineWidth = 1;
                     this.ctx.stroke();
                 }
@@ -347,56 +347,102 @@ pulseStyle.textContent = `
 `;
 document.head.appendChild(pulseStyle);
 
-// ===== Form Handling =====
+// ===== Form Handling with Formspree =====
 const contactForm = document.querySelector('.contact-form');
 
 if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+    contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const formData = new FormData(contactForm);
-        const data = Object.fromEntries(formData);
+        const submitBtn = contactForm.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.innerHTML;
 
-        console.log('Form submitted:', data);
-
-        // Show success message
-        const successMessage = document.createElement('div');
-        successMessage.textContent = 'Message envoyé avec succès! 🚀';
-        successMessage.style.cssText = `
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
-            color: white;
-            padding: 2rem 3rem;
-            border-radius: var(--radius-lg);
-            font-family: var(--font-mono);
-            font-size: 1.125rem;
-            font-weight: 600;
-            box-shadow: 0 20px 60px rgba(0, 240, 255, 0.5);
-            z-index: 10000;
-            animation: slideIn 0.5s ease;
+        // Show loading state
+        submitBtn.innerHTML = `
+            <span>Envoi en cours...</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="spin">
+                <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
         `;
+        submitBtn.disabled = true;
 
-        document.body.appendChild(successMessage);
+        const formData = new FormData(contactForm);
 
-        // Remove message after 3 seconds
-        setTimeout(() => {
-            successMessage.style.animation = 'slideOut 0.5s ease';
-            setTimeout(() => {
-                successMessage.remove();
-            }, 500);
-        }, 3000);
+        try {
+            const response = await fetch(contactForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
 
-        // Reset form
-        contactForm.reset();
+            if (response.ok) {
+                // Success message
+                showNotification('Message envoyé avec succès! 🚀', 'success');
+                contactForm.reset();
+            } else {
+                throw new Error('Erreur serveur');
+            }
+        } catch (error) {
+            // Error message
+            showNotification('Erreur lors de l\'envoi. Réessayez.', 'error');
+            console.error('Form error:', error);
+        } finally {
+            // Restore button
+            submitBtn.innerHTML = originalBtnText;
+            submitBtn.disabled = false;
+        }
     });
 }
 
-// Add slide animations
+// Notification helper function
+function showNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.textContent = message;
+
+    const bgColor = type === 'success'
+        ? 'linear-gradient(135deg, var(--neon-cyan), var(--neon-purple))'
+        : 'linear-gradient(135deg, #ef4444, #dc2626)';
+
+    notification.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: ${bgColor};
+        color: white;
+        padding: 2rem 3rem;
+        border-radius: var(--radius-lg);
+        font-family: var(--font-display);
+        font-size: 1.125rem;
+        font-weight: 600;
+        box-shadow: 0 20px 60px rgba(0, 212, 255, 0.5);
+        z-index: 10000;
+        animation: slideIn 0.5s ease;
+        text-align: center;
+    `;
+
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.5s ease';
+        setTimeout(() => notification.remove(), 500);
+    }, 3000);
+}
+
+// Add slide animations and spinner
 const slideStyle = document.createElement('style');
 slideStyle.textContent = `
+    .spin {
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
     @keyframes slideIn {
         from {
             opacity: 0;
@@ -429,7 +475,7 @@ const createScrollIndicator = () => {
         top: 0;
         left: 0;
         height: 3px;
-        background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta), var(--neon-purple));
+        background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple), var(--neon-purple));
         z-index: 10000;
         transition: width 0.2s ease;
         box-shadow: var(--glow-cyan);
@@ -540,7 +586,7 @@ const createFloatingParticle = () => {
         position: fixed;
         width: ${size}px;
         height: ${size}px;
-        background: radial-gradient(circle, rgba(0, 240, 255, 0.1), transparent);
+        background: radial-gradient(circle, rgba(0, 212, 255, 0.1), transparent);
         border-radius: 50%;
         bottom: -${size}px;
         left: ${startX}px;
@@ -595,6 +641,6 @@ if ('scrollRestoration' in history) {
 
 // ===== Initialize on Load =====
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('%c🚀 Portfolio Futuriste Chargé!', 'color: #00f0ff; font-size: 20px; font-weight: bold;');
-    console.log('%cDéveloppé par Steven', 'color: #8338ec; font-size: 14px;');
+    console.log('%c🚀 Portfolio Midnight Aurora Chargé!', 'color: #00d4ff; font-size: 20px; font-weight: bold;');
+    console.log('%cDéveloppé par Steven', 'color: #8b5cf6; font-size: 14px;');
 });
